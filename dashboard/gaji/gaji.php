@@ -1,4 +1,4 @@
-<?php include "con.php"; ?>
+<?php include "conn.php"; ?>
 <div class="container-fluid py-4">
 
     <div class="row">
@@ -11,18 +11,6 @@
                     <form action="" method="post">
                         <div class="row justify-content-center">
                             <div class="col-md-2">
-                                <select id="bulan" class="form-select form-select-sm text-center" name="bulan">
-                                    <option value="">-- Bulan --</option>
-                                    <?php foreach ($bulanOptions as $bulan) { ?>
-                                        <option value="<?php echo htmlspecialchars(
-                                            $bulan,
-                                        ); ?>"><?php echo htmlspecialchars(
-    $bulan,
-); ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
                                 <select id="tahun" class="form-select form-select-sm text-center" name="tahun">
                                     <option value="">-- Tahun --</option>
                                     <?php foreach ($tahunOptions as $tahun) { ?>
@@ -30,6 +18,19 @@
                                             $tahun,
                                         ); ?>"><?php echo htmlspecialchars(
     $tahun,
+); ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <select id="bulan" class="form-select form-select-sm text-center" name="bulan">
+                                    <option value="">-- Bulan --</option>
+                                    <?php foreach ($bulanOptions as $bulan) { ?>
+                                        <option value="<?php echo htmlspecialchars(
+                                            $bulan,
+                                        ); ?>"><?php echo htmlspecialchars(
+    $bulan,
 ); ?></option>
                                     <?php } ?>
                                 </select>
@@ -68,5 +69,5 @@
         </div>
     </div>
 </div>
-
+<?php include "get/bulan.php"; ?>
 <?php include "../inc/footer.php"; ?>

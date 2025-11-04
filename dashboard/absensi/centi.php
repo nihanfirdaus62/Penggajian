@@ -14,16 +14,6 @@ $tahunOptions = $pdo
     ->query("SELECT DISTINCT tahun FROM kehadiran ORDER BY tahun")
     ->fetchAll(PDO::FETCH_COLUMN);
 
-$sqlse = "SELECT * FROM kehadiran ";
-$stmtJabatan = $pdo->prepare($sqlse);
-$stmtJabatan->execute();
-$options = [];
-if ($stmtJabatan->rowCount() > 0) {
-    while ($row = $stmtJabatan->fetch(PDO::FETCH_ASSOC)) {
-        $options[] = $row;
-    }
-}
-
 $out = [];
 $counter = 1;
 

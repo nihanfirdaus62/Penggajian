@@ -1,6 +1,6 @@
-
-<?php include "../inc/header.php"; ?>
 <?php
+include "../inc/session.php";
+include "../inc/header.php";
 $sql = "SELECT 'total_pegawai' as label, count(*) as count FROM pegawai
         UNION
         SELECT 'total_jabatan' as label, count(*) as count FROM jabatan

@@ -108,7 +108,7 @@ if (isset($_POST["btnsv"]) && isset($_GET["nama_jabatan"])) {
         $edit_form_data["gaji"] = $gaji;
     }
 }
-
+include "../inc/lm.php";
 include "../inc/header.php";
 include "../inc/pagination.php";
 ?>

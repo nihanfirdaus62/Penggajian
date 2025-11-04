@@ -1,65 +1,89 @@
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="false">
+  <div class="container-fluid py-1 px-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+        <li class="breadcrumb-item text-sm">
+          <a class="opacity-5 text-white" href="javascript:;">Pages</a>
+        </li>
 
-<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
-      <div class="container-fluid py-1 px-3">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <?php if (
-                $display === "Edit Pegawai" ||
-                $display === "Tambah Pegawai"
-            ) { ?>
-                <li class="breadcrumb-item text-sm " aria-current="page"><a class="opacity-5 text-white" href="../admin/data.php">Data</a></li>
-                <li class="breadcrumb-item text-sm " aria-current="page"><a class="opacity-5 text-white" href="../pegawai/dataPegawai.php">Data Pegawai</a></li>
-                <li class="breadcrumb-item text-sm text-white active" aria-current="page"><?php echo htmlspecialchars(
-                    $display,
-                ); ?></li>
-           <?php } elseif ($display === "Data Pegawai") { ?>
-                <li class="breadcrumb-item text-sm " aria-current="page"><a class="opacity-5 text-white" href="../admin/data.php">Data</a></li>
-                <li class="breadcrumb-item text-sm text-white active" aria-current="page"><?php echo htmlspecialchars(
-                    $display,
-                ); ?></li>
-           <?php } elseif ($display === "Data Jabatan") { ?>
-                <li class="breadcrumb-item text-sm " aria-current="page"><a class="opacity-5 text-white" href="../admin/data.php">Data</a></li>
-                <li class="breadcrumb-item text-sm text-white active" aria-current="page"><?php echo htmlspecialchars(
-                    $display,
-                ); ?></li>
-           <?php } elseif ($display === "Data") { ?>
-                <li class="breadcrumb-item text-sm text-white active" aria-current="page"><?php echo htmlspecialchars(
-                    $display,
-                ); ?></li>
-                <?php } elseif ($display === "Tambah Data") { ?>
-                    <li class="breadcrumb-item text-sm text-white active" aria-current="page"><a class="opacity-5 text-white" href="../admin/rekap.php">Rekapitulasi</a></li>
-                    <li class="breadcrumb-item text-sm " aria-current="page"><a class="opacity-5 text-white" href="../absensi/absensi.php">Rekap Absensi</a></li>
-                    <li class="breadcrumb-item text-sm text-white active" aria-current="page"><?php echo htmlspecialchars(
-                        $display,
-                    ); ?></li>
-                <?php } elseif ($display === "Rekap Absensi") { ?>
-                    <li class="breadcrumb-item text-sm text-white active" aria-current="page"><a class="opacity-5 text-white" href="../admin/rekap.php">Rekapitulasi</a></li>
-                    <li class="breadcrumb-item text-sm text-white active" aria-current="page"><?php echo htmlspecialchars(
-                        $display,
-                    ); ?></li>
-                <?php } elseif ($display === "Rekap Gaji") { ?>
-                    <li class="breadcrumb-item text-sm text-white active" aria-current="page"><a class="opacity-5 text-white" href="../admin/rekap.php">Rekapitulasi</a></li>
-                    <li class="breadcrumb-item text-sm text-white active" aria-current="page"><?php echo htmlspecialchars(
-                        $display,
-                    ); ?></li>
-                <?php } else { ?>
-                <li class="breadcrumb-item text-sm text-white active" aria-current="page"><?php echo htmlspecialchars(
-                    $display,
-                ); ?></li>
-            <?php } ?>
-          </ol>
-        </nav>
+        <?php
+        // Define breadcrumb paths dynamically
+        $breadcrumbs = [];
 
-        <p class="float-end text-white"> <?php
-        $test = [$_SESSION["username"]];
-        $sql = "SELECT nama, username FROM pegawai WHERE username = ?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($test);
-        $user = $stmt->fetch();
-        echo htmlspecialchars($user["nama"]);
-        ?></p>
-      </div>
+        switch ($display) {
+            case "Edit Pegawai":
+            case "Tambah Pegawai":
+                $breadcrumbs = [
+                    ["label" => "Data", "link" => "../admin/data.php"],
+                    [
+                        "label" => "Data Pegawai",
+                        "link" => "../pegawai/dataPegawai.php",
+                    ],
+                    ["label" => $display, "active" => true],
+                ];
+                break;
 
-      <a href="../admin/logout.php" class="float-end text-white">Logout</a>
+            case "Data Pegawai":
+            case "Data Jabatan":
+                $breadcrumbs = [
+                    ["label" => "Data", "link" => "../admin/data.php"],
+                    ["label" => $display, "active" => true],
+                ];
+                break;
+
+            case "Data":
+                $breadcrumbs = [["label" => $display, "active" => true]];
+                break;
+
+            case "Tambah Data":
+                $breadcrumbs = [
+                    ["label" => "Rekapitulasi", "link" => "../admin/rekap.php"],
+                    [
+                        "label" => "Rekap Absensi",
+                        "link" => "../absensi/absensi.php",
+                    ],
+                    ["label" => $display, "active" => true],
+                ];
+                break;
+
+            case "Rekap Absensi":
+            case "Rekap Gaji":
+                $breadcrumbs = [
+                    ["label" => "Rekapitulasi", "link" => "../admin/rekap.php"],
+                    ["label" => $display, "active" => true],
+                ];
+                break;
+
+            default:
+                $breadcrumbs = [["label" => $display, "active" => true]];
+                break;
+        }
+
+        // Render breadcrumbs
+        foreach ($breadcrumbs as $crumb) {
+            if (!empty($crumb["active"])) {
+                echo '<li class="breadcrumb-item text-sm text-white active" aria-current="page">' .
+                    htmlspecialchars($crumb["label"]) .
+                    "</li>";
+            } else {
+                echo '<li class="breadcrumb-item text-sm" aria-current="page">' .
+                    '<a class="opacity-5 text-white" href="' .
+                    htmlspecialchars($crumb["link"]) .
+                    '">' .
+                    htmlspecialchars($crumb["label"]) .
+                    "</a></li>";
+            }
+        }
+        ?>
+      </ol>
     </nav>
+
+    <!-- User and Logout -->
+    <div class="d-flex align-items-center ms-auto">
+      <p class="mb-0 text-white me-3"><?php echo htmlspecialchars(
+          $user["nama"],
+      ); ?></p>
+      <a href="../admin/logout.php" class="text-white text-decoration-none">Logout</a>
+    </div>
+  </div>
+</nav>

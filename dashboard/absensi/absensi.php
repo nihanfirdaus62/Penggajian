@@ -1,7 +1,6 @@
 <?php include "centi.php"; ?>
 <div class="container-fluid py-4">
     <div class="row">
-
         <div class="col-sm-9 mb-4">
             <div class="card mt-2">
                 <div class="card-header sticky-top pt-3 pb-0">

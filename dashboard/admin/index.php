@@ -1,4 +1,4 @@
-
+<?php include "../inc/lm.php"; ?>
 <?php include "../inc/header.php"; ?>
 <?php
 $sql = "SELECT 'total_pegawai' as label, count(*) as count FROM pegawai

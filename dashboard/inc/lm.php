@@ -25,5 +25,10 @@ $cut = [
 ];
 $display = $cut[$current] ?? $cut["default"];
 
-$sesi = $_SESSION["jabatan"];
+$test = [$_SESSION["username"]];
+$sql = "SELECT nama, username FROM pegawai WHERE username = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute($test);
+$user = $stmt->fetch();
+
 ?>

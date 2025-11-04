@@ -1,4 +1,6 @@
-<?php include "../inc/header.php";
+<?php
+include "../inc/lm.php";
+include "../inc/header.php";
 
 $sqlPegawai =
     "SELECT * FROM pegawai INNER JOIN jabatan ON pegawai.jabatan = jabatan.nama_jabatan";

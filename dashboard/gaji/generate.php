@@ -10,7 +10,7 @@ require_once "../../pdf/tcpdf.php";
 $bulan = $_GET["bulan"] ?? null;
 if (!$bulan) {
     $_SESSION["status"] = "Pilih bulan untuk mencetak PDF";
-    header("Location: gaji.php?error=failed"); // Fix: Redirect to gaji.php
+    header("Location: gaji.php?error=failed");
     exit();
 }
 try {
@@ -28,7 +28,7 @@ try {
 }
 if (empty($data)) {
     $_SESSION["status"] = "Tidak ada data untuk bulan tersebut";
-    header("Location: gaji.php?error=failed"); // Fix: Redirect to gaji.php
+    header("Location: gaji.php?error=failed");
     exit();
 }
 
@@ -53,7 +53,7 @@ $pdf->AddPage();
 
 $pdf->SetFont("helvetica", "", 12);
 $pdf->Cell(0, 10, "PT. Contoh Perusahaan", 0, 1, "C");
-$pdf->Cell(0, 10, "Rekapitulasi Gaji Karyawan Bulanan", 0, 1, "C"); // Updated title
+$pdf->Cell(0, 10, "Rekapitulasi Gaji Karyawan Bulanan", 0, 1, "C");
 $pdf->Cell(0, 10, "bulan: $bulan", 0, 1, "C");
 $pdf->Cell(0, 10, "Tanggal: " . date("d-m-Y"), 0, 1, "C");
 
@@ -86,7 +86,7 @@ foreach ($data as $row) {
 }
 
 $pdf->Ln(20);
-// Define the widths for the two columns
+
 $left_col_width = 80; // Adjust as needed
 $right_col_width = 0; // 0 will extend to the right margin
 

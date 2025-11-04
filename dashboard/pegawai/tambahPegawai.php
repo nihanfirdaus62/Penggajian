@@ -102,6 +102,7 @@ if ($stmtJabatan->rowCount() > 0) {
     }
 }
 
+include "../inc/lm.php";
 include "../inc/header.php";
 ?>
 <div class="container-fluid py-4"> <!-- Container Fluid - end in footer-->

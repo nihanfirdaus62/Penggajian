@@ -135,7 +135,10 @@ if (isset($_POST["btnsv"])) {
 }
 ?>
 
-<?php include "../inc/header.php"; ?>
+<?php
+include "../inc/lm.php";
+include "../inc/header.php";
+?>
 <div class="container-fluid py-4"> <!-- Container Fluid - end in footer-->
     <div class="row">
         <div class="col-sm-4 md-4">
