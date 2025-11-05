@@ -18,7 +18,6 @@ $total_kehadiran = $counts["Total_kehadiran"];
       <div class="row"> <!-- Kotak kotak di atas -->
           <p class="text-uppercase text-lg mb-0 font-weight-bold">Dashboard</p>
         <p><span id="current-datetime"></span></p>
-        <?php if ($_SESSION["jabatan"] == "Bendahara") { ?>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 ms-10">
           <div class="card">
             <div class="card-body p-3">
@@ -94,7 +93,7 @@ $total_kehadiran = $counts["Total_kehadiran"];
           </div>
         </div>
       </div>
-<?php } ?>
+
       <script>
       function updateDateTime() {
         const now = new Date();
