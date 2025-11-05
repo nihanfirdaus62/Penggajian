@@ -143,18 +143,18 @@ class MYPDF extends TCPDF
             }
 
             // Label
-            $this->SetFont("helvetica", "", 12);
+            $this->SetFont("helvetica", "", 15);
             $this->Cell($labelWidth, $labelHeight, $lab, $border, 0, "L");
 
             // Prefix (: or =)
-            $this->SetFont("helvetica", "", 12);
+            $this->SetFont("helvetica", "", 15);
             $this->Cell(10, $labelHeight, $prefix, $border, 0, "C");
 
             // Value
             $x = $this->GetX();
             $y = $this->GetY();
 
-            $this->SetFont("helvetica", "", 12);
+            $this->SetFont("helvetica", "", 15);
             $this->Cell(
                 $valueWidth,
                 $labelHeight,
@@ -209,7 +209,6 @@ $pdf->Image(K_PATH_IMAGES . "logo.png", 30, 60, 150, 0, "", "", "", false, 300);
 $pdf->SetAlpha(1);
 
 $pdf->Ln(10);
-$pdf->SetFont("helvetica", "", 12);
 
 $pdf->cells(
     false,
@@ -242,7 +241,7 @@ $pdf->cells(
     55,
     false,
 );
-$pdf->Ln(60);
+$pdf->Ln(40);
 
 $pdf->Cell(
     0,
