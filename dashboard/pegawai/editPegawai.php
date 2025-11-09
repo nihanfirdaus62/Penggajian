@@ -47,30 +47,34 @@ if (isset($_POST["btnsv"])) {
     $username = trim($_POST["username"] ?? "");
     $password = $_POST["password"] ?? "";
 
-    if (empty($nama) || strlen($nama) < 2) {
-        $errors[] = "Nama harus diisi dan minimal 2 karakter.";
+    if (empty($nama) || strlen($nama) < 5) {
+        $errors["nama"] = " Nama  minimal 5 karakter!.";
     }
     if (!in_array($jenis_kelamin, ["Laki-Laki", "Perempuan"])) {
-        $errors[] = "Pilih jenis kelamin valid.";
+        $errors["jenis_kelamin"] = "Pilih salah satu jenis kelamin!.";
     }
     if (empty($tanggal_lahir)) {
-        $errors[] = "Tanggal lahir harus diisi.";
+        $errors["tanggal_lahir"] = "Tanggal lahir harus diisi!.";
     }
     if (empty($no_hp) || !preg_match('/^[0-9]{10,13}$/', $no_hp)) {
-        $errors[] = "Nomor HP harus angka 10-13 digit.";
+        $errors["no_hp"] = "Nomor HP harus angka 10-13 digit!.";
     }
     if (empty($alamat) || strlen($alamat) < 5) {
-        $errors[] = "Alamat harus diisi dan minimal 5 karakter.";
+        $errors["alamat"] = "Alamat harus diisi minimal 5 karakter!.";
     }
     if (empty($jabatan)) {
-        $errors[] = "Pilih jabatan.";
+        $errors["jabatan"] = "Pilih jabatan.";
     }
     if (empty($username) || strlen($username) < 3) {
-        $errors[] = "Username harus diisi dan minimal 3 karakter.";
+        $errors["username"] = "minimal 3 karakter.";
     }
     if (!empty($password) && strlen($password) < 6) {
-        $errors[] =
+        $errors["password"] =
             "Password baru minimal 6 karakter (kosongkan jika tidak ubah).";
+    }
+    if (!empty($errors)) {
+        $_SESSION["status"] = "Error";
+        $_SESSION["status_code"] = "error";
     }
 
     if (empty($errors) && $username !== $pegawai["username"]) {
@@ -118,6 +122,7 @@ if (isset($_POST["btnsv"])) {
         $stmt = $pdo->prepare($updateSql);
         if ($stmt->execute($param)) {
             $_SESSION["status"] = "Data pegawai berhasil diperbarui.";
+            $_SESSION["status_code"] = "success";
             header("Location: dataPegawai.php");
             exit();
         } else {
@@ -149,15 +154,6 @@ include "../inc/header.php";
                     </div>
                 </div>
                 <div class="card-body">
-                    <?php if (!empty($errors)): ?>
-                    <div class="alert alert-danger">
-                        <ul class="mb-0">
-                            <?php foreach ($errors as $error): ?>
-                            <li><?= htmlspecialchars($error) ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                    <?php endif; ?>
                     <form action="" method="POST">
                         <p class="text-uppercase text-sm">Informasi pegawai</p>
                         <div class="row">
@@ -172,17 +168,37 @@ include "../inc/header.php";
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nama" class="form-control-label">Nama</label>
-                                    <input class="form-control" type="text" name="nama" value="<?php echo htmlspecialchars(
-                                        $pegawai["nama"] ?? "",
-                                    ); ?>">
+                                    <input class="form-control <?php echo isset(
+                                        $errors["nama"],
+                                    )
+                                        ? "is-invalid"
+                                        : ""; ?>" type="text" name="nama" value="<?php echo htmlspecialchars(
+    $pegawai["nama"] ?? "",
+); ?>">
+                                    <?php echo isset($errors["nama"])
+                                        ? "<div class='invalid-feedback'>" .
+                                            htmlspecialchars($errors["nama"]) .
+                                            "</div>"
+                                        : ""; ?>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="username" class="form-control-label">Username</label>
-                                    <input class="form-control" type="text" name="username" value="<?php echo htmlspecialchars(
-                                        $pegawai["username"] ?? "",
-                                    ); ?>">
+                                    <input class="form-control <?php echo isset(
+                                        $errors["username"],
+                                    )
+                                        ? "is-invalid"
+                                        : ""; ?>" type="text" name="username" value="<?php echo htmlspecialchars(
+    $pegawai["username"] ?? "",
+); ?>">
+                                    <?php echo isset($errors["username"])
+                                        ? "<div class='invalid-feedback'>" .
+                                            htmlspecialchars(
+                                                $errors["username"],
+                                            ) .
+                                            "</div>"
+                                        : ""; ?>
                                 </div>
                             </div>
                             <div class="col-md-6">

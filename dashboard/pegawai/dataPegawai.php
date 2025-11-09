@@ -23,13 +23,6 @@ if ($stmtPegawai->rowCount() > 0) {
                 </h6>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-                <?php if (
-                    isset($_SESSION["status"]) &&
-                    $_SESSION["status"] != ""
-                ) { ?>
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <?php echo $_SESSION["status"];} ?>
-                    </div>
                 <div class="table-responsive p-0">
                     <table class="table align-items-center mb-0">
                         <thead>
@@ -130,7 +123,7 @@ if ($stmtPegawai->rowCount() > 0) {
                                         |
                                     <a href="hapusPegawai.php?nip=<?php echo urlencode(
                                         $row["nip"],
-                                    ); ?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Hapus user" onclick="return confirm('Are you sure you want to delete this item?');">
+                                    ); ?>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Hapus user" onclick="event.preventDefault(); confirmDelete(event);">
                                         Hapus
                                     </a>
                                 </td>
