@@ -1,18 +1,10 @@
 <?php
 include "../inc/lm.php";
 include "../inc/header.php";
-
-$sqlPegawai =
-    "SELECT * FROM pegawai INNER JOIN jabatan ON pegawai.jabatan = jabatan.nama_jabatan";
-$stmtPegawai = $pdo->prepare($sqlPegawai);
-$stmtPegawai->execute();
-$output = [];
-$counter = 1;
-if ($stmtPegawai->rowCount() > 0) {
-    while ($out = $stmtPegawai->fetch()) {
-        $output[] = $out;
-    }
-}
+include "../inc/pagination.php";
+$join = "INNER JOIN jabatan ON pegawai.jabatan = jabatan.nama_jabatan";
+$pagination = new Pagination($pdo);
+$pagination->page("pegawai", "nama", 5, $join);
 ?>
 <div class="container-fluid py-4">
     <div class="col-sm-12 mb-4">
@@ -21,6 +13,10 @@ if ($stmtPegawai->rowCount() > 0) {
                 <h6>Data Pegawai
                         <a href="tambahPegawai.php" class="btn btn-light float-end me-2">+</a>
                 </h6>
+                <div class="d-flex justify-content-between">
+                    <!-- Pagination -->
+                    <?php echo $pagination->link("dataPegawai.php"); ?>
+                </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -41,11 +37,11 @@ if ($stmtPegawai->rowCount() > 0) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($output as $row): ?>
+                            <?php foreach ($pagination->output as $row): ?>
                             <tr>
                                 <td class="align-middle text-center">
                                     <p class="font-weight-bold mb-0 text-center"> <?php echo htmlspecialchars(
-                                        $counter++,
+                                        $pagination->counter++,
                                     ) ?? "N/A"; ?></p>
                                 </td>
                                 <td class="align-middle text-center">

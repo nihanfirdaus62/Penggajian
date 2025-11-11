@@ -111,4 +111,6 @@ if (isset($_POST["btnsv"]) && isset($_GET["nama_jabatan"])) {
 include "../inc/lm.php";
 include "../inc/header.php";
 include "../inc/pagination.php";
+$pagination = new Pagination($pdo);
+$pagination->page("jabatan", "nama_jabatan", 5);
 ?>

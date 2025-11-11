@@ -11,59 +11,7 @@
                     </h6>
                     <div class="d-flex justify-content-between">
                         <!-- Pagination -->
-                        <?php if ($totalPages > 1): ?>
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination float-end">
-                                    <?php
-                                    $prevQuery = $_GET;
-                                    unset($prevQuery["page"]);
-                                    $prevQuery["page"] = $page - 1;
-                                    $prevHref =
-                                        "Jabatan.php?" .
-                                        http_build_query($prevQuery);
-                                    if ($page > 1): ?>
-                                        <li class="page-item">
-                                            <a class="page-link" href="<?php echo $prevHref; ?>" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                    <?php endif;
-                                    ?>
-                                    <?php for ($i = 1; $i <= $totalPages; $i++):
-
-                                        $pageQuery = $_GET;
-                                        unset($pageQuery["page"]);
-                                        $pageQuery["page"] = $i;
-                                        $pageHref =
-                                            "Jabatan.php?" .
-                                            http_build_query($pageQuery);
-                                        ?>
-                                        <li class="page-item <?php echo $i ==
-                                        $page
-                                            ? "active"
-                                            : ""; ?>">
-                                            <a class="page-link" href="<?php echo $pageHref; ?>"><?php echo $i; ?></a>
-                                        </li>
-                                    <?php
-                                    endfor; ?>
-                                    <?php
-                                    $nextQuery = $_GET;
-                                    unset($nextQuery["page"]);
-                                    $nextQuery["page"] = $page + 1;
-                                    $nextHref =
-                                        "Jabatan.php?" .
-                                        http_build_query($nextQuery);
-                                    if ($page < $totalPages): ?>
-                                        <li class="page-item">
-                                            <a class="page-link" href="<?php echo $nextHref; ?>" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    <?php endif;
-                                    ?>
-                                </ul>
-                            </nav>
-                        <?php endif; ?>
+                        <?php echo $pagination->link("Jabatan.php"); ?>
                     </div>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
@@ -86,11 +34,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($output as $row): ?>
+                                <?php foreach ($pagination->output as $row): ?>
                                     <tr>
                                         <td class="align-middle text-center">
                                             <p class="font-weight-bold mb-0 text-center"><?php echo htmlspecialchars(
-                                                $counter++,
+                                                $pagination->counter++,
                                             ) ?? "N/A"; ?></p>
                                         </td>
                                         <td class="align-middle text-center">
