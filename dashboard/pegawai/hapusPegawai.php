@@ -46,6 +46,7 @@ try {
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }
+
     $_SESSION["status"] = "Terjadi kesalahan: " . $e->getMessage();
     $_SESSION["status_code"] = "error";
 }
