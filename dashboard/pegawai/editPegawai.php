@@ -154,8 +154,9 @@ include "../inc/header.php";
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="" method="POST">
+                    <form action="" method="POST"> <!-- Form Edit -->
                         <p class="text-uppercase text-sm">Informasi pegawai</p>
+                        <!-- Start Row -->
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -165,6 +166,7 @@ include "../inc/header.php";
                                     ); ?>" readonly>
                                 </div>
                             </div>
+                             <!--Form Nama -->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nama" class="form-control-label">Nama</label>
@@ -172,16 +174,19 @@ include "../inc/header.php";
                                         $errors["nama"],
                                     )
                                         ? "is-invalid"
-                                        : ""; ?>" type="text" name="nama" value="<?php echo htmlspecialchars(
-    $pegawai["nama"] ?? "",
-); ?>">
-                                    <?php echo isset($errors["nama"])
-                                        ? "<div class='invalid-feedback'>" .
-                                            htmlspecialchars($errors["nama"]) .
-                                            "</div>"
-                                        : ""; ?>
+                                        : ""; ?>" type="text" name="nama"
+                                        value="<?php echo htmlspecialchars(
+                                            $pegawai["nama"] ?? "",
+                                        ); ?>">
+
+                                    <div class="invalid-feedback">
+                                        <?php echo htmlspecialchars(
+                                            $errors["nama"],
+                                        ); ?>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Form Username -->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="username" class="form-control-label">Username</label>
@@ -189,32 +194,49 @@ include "../inc/header.php";
                                         $errors["username"],
                                     )
                                         ? "is-invalid"
-                                        : ""; ?>" type="text" name="username" value="<?php echo htmlspecialchars(
-    $pegawai["username"] ?? "",
-); ?>">
-                                    <?php echo isset($errors["username"])
-                                        ? "<div class='invalid-feedback'>" .
-                                            htmlspecialchars(
-                                                $errors["username"],
-                                            ) .
-                                            "</div>"
-                                        : ""; ?>
+                                        : ""; ?>" type="text" name="username"
+                                        value="<?php echo htmlspecialchars(
+                                            $pegawai["username"] ?? "",
+                                        ); ?>">
+
+                                    <div class="invalid-feedback">
+                                        <?php echo $errors["username"] ?? ""; ?>
+                                    </div>
                                 </div>
                             </div>
+                             <!-- Form Password -->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="password" class="form-control-label">Password</label>
-                                    <input class="form-control" type="password" name="password">
+                                    <input class="form-control <?php echo isset(
+                                        $errors["password"],
+                                    )
+                                        ? "is-invalid"
+                                        : ""; ?>" type="password" name="password">
+
+                                    <div class="invalid-feedback">
+                                        <?php echo $errors["password"] ?? ""; ?>
+                                    </div>
                                 </div>
                             </div>
+                            <!--Form Tanggal Lahir-->
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="tanggal_lahir" class="form-control-label">Tanggal lahir</label>
-                                    <input class="form-control" type="date" name="tanggal_lahir" value="<?php echo htmlspecialchars(
-                                        $pegawai["tanggal_lahir"],
-                                    ); ?>">
+                                    <input class="form-control <?php echo isset(
+                                        $errors["tanggal_lahir"],
+                                    )
+                                        ? "is-invalid"
+                                        : ""; ?>" type="date" name="tanggal_lahir"
+                                        value="<?php echo htmlspecialchars(
+                                            $pegawai["tanggal_lahir"],
+                                        ); ?>">
+                                    <div class="invalid-feedback">
+                                        <?= $errors["tanggal_lahir"] ?>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Form Jenis Kelamin -->
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Jenis Kelamin</label> <br>
@@ -234,23 +256,36 @@ include "../inc/header.php";
                                     <label for="Perempuan">Perempuan</label>
                                 </div>
                             </div>
+                        <!-- End Row -->
                         </div>
+
                         <hr class="horizontal dark">
-                        <p class="text-uppercase text-sm">Contact Information</p>
+                        <p class="text-uppercase text-sm">Informasi Kontak</p>
+                        <!-- Start Row -->
                         <div class="row">
+                            <!--Form No HP -->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="no_hp" class="form-control-label">Nomor Ponsel</label>
-                                    <input class="form-control" type="text" name="no_hp" pattern="[0-9]*" maxlength="13"  value="<?php echo htmlspecialchars(
-                                        $pegawai["no_hp"] ?? "",
-                                    ); ?>">
+                                    <input class="form-control <?php echo isset(
+                                        $errors["no_hp"],
+                                    )
+                                        ? "is-invalid"
+                                        : ""; ?>" type="text" name="no_hp" pattern="[0-9]*" maxlength="13"
+                                        value="<?php echo htmlspecialchars(
+                                            $pegawai["no_hp"] ?? "",
+                                        ); ?>">
+                                            <!-- Call Error Message  -->
+                                    <div class="invalid-feedback">
+                                        <?php echo $errors["no_hp"] ?? ""; ?>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- Form Jabatan -->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="jabatan" class="form-control-label">Jabatan</label>
-                                    <select name="jabatan" id="jabatan" class="form-select">
-
+                                    <select name="jabatan" id="jabatan" class="form-select ">
                                     <?php foreach ($options as $opt): ?>
                                         <option value="<?= htmlspecialchars(
                                             $opt["nama_jabatan"],
@@ -267,6 +302,7 @@ include "../inc/header.php";
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="alamat" class="form-control-label">Alamat</label>

@@ -2,20 +2,46 @@
 include "../inc/lm.php";
 include "../inc/header.php";
 include "../inc/pagination.php";
-$join = "INNER JOIN jabatan ON pegawai.jabatan = jabatan.nama_jabatan";
+$tabel = "pegawai";
+$column = "nama";
 $pagination = new Pagination($pdo);
-$pagination->page("pegawai", "nama", 5, $join);
+$pagination->page(
+    $tabel,
+    $column,
+    5,
+    "INNER JOIN jabatan ON pegawai.jabatan = jabatan.nama_jabatan",
+);
 ?>
 <div class="container-fluid py-4">
     <div class="col-sm-12 mb-4">
         <div class="card mt-2">
             <div class="card-header sticky-top">
-                <h6>Data Pegawai
-                        <a href="tambahPegawai.php" class="btn btn-light float-end me-2">+</a>
-                </h6>
-                <div class="d-flex justify-content-between">
-                    <!-- Pagination -->
-                    <?php echo $pagination->link("dataPegawai.php"); ?>
+                <h6 class="mb-1">Data Pegawai</h6>
+                <div class="d-flex justify-content-between mx-2">
+
+                    <!-- Search -->
+                        <form action="" method="POST">
+                            <div class="d-flex align-items-center mb-1">
+                              <input type="text" class="form-control me-2" name="search" placeholder="Cari Pegawai...">
+                              <button class="btn btn-outline-secondary btn-sm mt-3 me-2" type="submit">Cari</button>
+
+                            </div>
+
+                        </form>
+
+
+                    <?php if (
+                        isset($_POST["search"]) &&
+                        !empty($_POST["search"])
+                    ) {
+                        $search = $_POST["search"];
+                        $pagination->search($tabel, $column, $search);
+                    } ?>
+                </div>
+                <!-- Pagination -->
+                <div class="d-flex align-items-center mb-1">
+                     <a href="tambahPegawai.php" class="btn btn-outline-primary btn-sm ms-2 me-2">Tambah</a>
+                     <?php echo $pagination->link("dataPegawai.php"); ?>
                 </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">

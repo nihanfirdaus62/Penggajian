@@ -24,8 +24,8 @@
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- CSS Files -->
-
-  <link id="pagestyle" href="../../assets/css/dashboard.min.css" rel="stylesheet"
+  <link id="pagestyle" href="../../assets/css/dashboard.min.css" rel="stylesheet"/>
+  <link id="pagestyle" href="../../assets/css/pagination.css" rel="stylesheet"/>
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">

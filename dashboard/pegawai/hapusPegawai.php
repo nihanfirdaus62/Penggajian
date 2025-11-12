@@ -12,20 +12,44 @@ if (!isset($_GET["nip"]) || empty($_GET["nip"])) {
 }
 
 $nip = $_GET["nip"];
-$sql = "DELETE FROM pegawai WHERE nip = :nip";
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(":nip", $_GET["nip"], PDO::PARAM_STR);
 
-if ($stmt->execute()) {
-    $_SESSION["status"] = "Pegawai dengan NIP $nip berhasil dihapus.";
-    $_SESSION["status_code"] = "success";
-    header("Location: dataPegawai.php");
-} else {
+try {
+    $sql = "DELETE FROM pegawai WHERE nip = :nip";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([":nip" => $nip]);
+
+    $db = $pdo->query("SELECT DATABASE()")->fetchColumn();
+    $query = "
+    SELECT TABLE_NAME
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE COLUMN_NAME = 'nip'
+    AND TABLE_SCHEMA = :db
+    AND TABLE_NAME != 'pegawai'
+    ";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([":db" => $db]);
+
+    $tables = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    foreach ($tables as $table) {
+        $del = $pdo->prepare("DELETE FROM `$table` WHERE nip = :nip");
+        $del->execute([":nip" => $nip]);
+    }
+
+    $pdo->commit();
+
     $_SESSION[
         "status"
-    ] = "Terjadi kesalahan saat menghapus pegawai dengan NIP $nip.";
+    ] = "Data dengan nip $nip berhasil dihapus dari semua tabel terkait.";
+    $_SESSION["status_code"] = "success";
+} catch (Exception $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+    $_SESSION["status"] = "Terjadi kesalahan: " . $e->getMessage();
     $_SESSION["status_code"] = "error";
-    header("Location: dataPegawai.php");
 }
+
+header("Location: dataPegawai.php");
 exit();
 ?>
