@@ -1,39 +1,21 @@
 <?php
-session_start();
-if (!isset($_SESSION["username"]) || $_SESSION["jabatan"] !== "Bendahara") {
-    header("Location: ../sign-in/index.php");
-    exit();
-}
-require "../../config.php";
 $errors = [];
-$pegawai = null;
+require_once "../inc/sql.php";
 
-if (!isset($_GET["nip"]) || empty(trim($_GET["nip"]))) {
-    header("Location: dataPegawai.php?error=no_nip");
-    exit();
+$sqlHelper = new SqlHelper($pdo);
+$param = trim($_GET["nip"]);
+$where = "WHERE nip = ?";
+if ($sqlHelper->select("pegawai", $where, "", [$param])) {
+    $pegawai = $sqlHelper->get();
 }
 
-$nip = trim($_GET["nip"]);
+if ($sqlHelper->select("jabatan", "", "ORDER BY nama_jabatan ASC", [], false)) {
+    $options = $sqlHelper->get();
+}
 
-$sql = "SELECT * FROM pegawai WHERE nip = ?";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$_GET["nip"]]);
-$pegawai = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$pegawai) {
+if (empty($pegawai)) {
     header("Location: dataPegawai.php?error=not_found");
     exit();
-}
-
-$sqlJabatan =
-    "SELECT id_jabatan, nama_jabatan FROM jabatan ORDER BY nama_jabatan";
-$stmtJabatan = $pdo->prepare($sqlJabatan);
-$stmtJabatan->execute();
-$options = [];
-if ($stmtJabatan->rowCount() > 0) {
-    while ($row = $stmtJabatan->fetch(PDO::FETCH_ASSOC)) {
-        $options[] = $row;
-    }
 }
 
 if (isset($_POST["btnsv"])) {

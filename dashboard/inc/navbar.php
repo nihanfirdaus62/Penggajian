@@ -7,7 +7,6 @@
         </li>
 
         <?php
-        // Define breadcrumb paths dynamically
         $breadcrumbs = [];
 
         switch ($display) {
